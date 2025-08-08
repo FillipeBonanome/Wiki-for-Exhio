@@ -39,8 +39,16 @@ public class UserService {
 
     }
 
-    public Page<ReadUserDTO> getUsers(Pageable pageable) {
+    public Page<ReadUserDTO> getActiveUsers(Pageable pageable) {
         return userRepository.findAllByActiveTrue(pageable).map(u -> new ReadUserDTO(
+                u.getId(),
+                u.getName(),
+                u.getActive()
+        ));
+    }
+
+    public Page<ReadUserDTO> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(u -> new ReadUserDTO(
                 u.getId(),
                 u.getName(),
                 u.getActive()

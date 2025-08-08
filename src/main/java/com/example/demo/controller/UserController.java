@@ -19,9 +19,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/active")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Page<ReadUserDTO>> readUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+    public ResponseEntity<Page<ReadUserDTO>> readActiveUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+        return ResponseEntity.ok(userService.getActiveUsers(pageable));
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Page<ReadUserDTO>> readAllUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
         return ResponseEntity.ok(userService.getUsers(pageable));
     }
 }
