@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @NotBlank
     @Email
     private String email;
-    
+
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
