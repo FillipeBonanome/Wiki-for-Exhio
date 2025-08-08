@@ -3,13 +3,18 @@ package com.example.demo.service;
 import com.example.demo.domain.User;
 import com.example.demo.dto.CreateUserDTO;
 import com.example.demo.dto.ReadUserDTO;
+import com.example.demo.dto.UpdateUserDTO;
 import com.example.demo.infra.exception.DuplicateResourceException;
 import com.example.demo.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -53,5 +58,33 @@ public class UserService {
                 u.getName(),
                 u.getActive()
         ));
+    }
+
+    public ReadUserDTO updateUser(Authentication authentication, UpdateUserDTO userDTO) {
+        Optional<User> userOptional = (Optional<User>) authentication.getPrincipal();
+        if(userOptional.isEmpty()) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        User user = userOptional.get();
+
+        if (!user.getActive()) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        if(userDTO.name() != null) {
+            user.setName(userDTO.name());
+        }
+
+        if(userDTO.password() != null) {
+            user.setPassword(passwordEncoder.encode(userDTO.password()));
+        }
+
+        User savedUser = userRepository.save(user);
+        return new ReadUserDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getActive()
+        );
     }
 }

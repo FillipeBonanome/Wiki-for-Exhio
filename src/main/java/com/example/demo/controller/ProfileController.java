@@ -3,14 +3,16 @@ package com.example.demo.controller;
 import com.example.demo.domain.User;
 import com.example.demo.dto.FullUserDTO;
 import com.example.demo.dto.ReadUserDTO;
+import com.example.demo.dto.UpdateUserDTO;
 import com.example.demo.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -20,6 +22,9 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //TODO --> Verify safety for password
     @GetMapping
@@ -45,5 +50,12 @@ public class ProfileController {
                 true
         ));
     }
+
+    @PatchMapping("/edit")
+    @Transactional
+    public ResponseEntity<ReadUserDTO> editProfile(Authentication authentication, @RequestBody @Valid UpdateUserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(authentication, userDTO));
+    }
+
 
 }
