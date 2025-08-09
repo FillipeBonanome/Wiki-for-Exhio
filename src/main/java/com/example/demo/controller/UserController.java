@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.UserRole;
 import com.example.demo.dto.ReadUserDTO;
+import com.example.demo.dto.UserRoleDTO;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,5 +39,12 @@ public class UserController {
     @Transactional
     public ResponseEntity<ReadUserDTO> banUser(@PathVariable(name = "id") UUID uuid) {
         return ResponseEntity.ok(userService.banUser(uuid));
+    }
+
+    @PutMapping("{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Transactional
+    public ResponseEntity<ReadUserDTO> changeRole(@PathVariable(name = "id") UUID uuid, @RequestBody UserRoleDTO role) {
+        return ResponseEntity.ok(userService.changeRole(uuid, role));
     }
 }

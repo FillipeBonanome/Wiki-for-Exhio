@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.User;
+import com.example.demo.domain.UserRole;
 import com.example.demo.dto.CreateUserDTO;
 import com.example.demo.dto.ReadUserDTO;
 import com.example.demo.dto.UpdateUserDTO;
+import com.example.demo.dto.UserRoleDTO;
 import com.example.demo.infra.exception.DuplicateResourceException;
+import com.example.demo.infra.utils.EnumUtils;
 import com.example.demo.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,8 @@ public class UserService {
         return new ReadUserDTO(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getActive()
+                savedUser.getActive(),
+                savedUser.getRole()
         );
 
     }
@@ -49,7 +53,8 @@ public class UserService {
         return userRepository.findAllByActiveTrue(pageable).map(u -> new ReadUserDTO(
                 u.getId(),
                 u.getName(),
-                u.getActive()
+                u.getActive(),
+                u.getRole()
         ));
     }
 
@@ -57,7 +62,8 @@ public class UserService {
         return userRepository.findAll(pageable).map(u -> new ReadUserDTO(
                 u.getId(),
                 u.getName(),
-                u.getActive()
+                u.getActive(),
+                u.getRole()
         ));
     }
 
@@ -85,7 +91,8 @@ public class UserService {
         return new ReadUserDTO(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getActive()
+                savedUser.getActive(),
+                savedUser.getRole()
         );
     }
 
@@ -100,7 +107,8 @@ public class UserService {
         return new ReadUserDTO(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getActive()
+                savedUser.getActive(),
+                savedUser.getRole()
         );
     }
 
@@ -115,8 +123,29 @@ public class UserService {
         return new ReadUserDTO(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getActive()
+                savedUser.getActive(),
+                savedUser.getRole()
         );
 
+    }
+
+    public ReadUserDTO changeRole(UUID uuid, UserRoleDTO role) {
+        if (!EnumUtils.contains(UserRole.class, role.role().toString())) {
+            throw new IllegalArgumentException("Role not found");
+        }
+
+        Optional<User> userOptional = userRepository.findById(uuid);
+        if (userOptional.isEmpty()) {
+            throw new EntityNotFoundException("User not found");
+        }
+        User user = userOptional.get();
+        user.setRole(role.role());
+        User savedUser = userRepository.save(user);
+        return new ReadUserDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getActive(),
+                savedUser.getRole()
+        );
     }
 }
