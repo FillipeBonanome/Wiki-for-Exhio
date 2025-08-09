@@ -24,6 +24,11 @@ public class HuntController {
         return ResponseEntity.ok(huntService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReadHuntDTO> getHunt(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(huntService.getHuntById(id));
+    }
+
     @PostMapping
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -43,6 +48,14 @@ public class HuntController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ReadHuntDTO> removeMonsterFromHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "monster_id") Long monsterId) {
         return ResponseEntity.ok(huntService.removeMonsterFromHunt(huntId, monsterId));
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> deleteHunt(@PathVariable(name = "id") Long huntId) {
+        huntService.deleteHunt(huntId);
+        return ResponseEntity.ok().build();
     }
 
 }

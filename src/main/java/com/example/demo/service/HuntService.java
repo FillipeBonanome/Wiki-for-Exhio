@@ -63,4 +63,16 @@ public class HuntService {
         huntRepository.save(hunt);
         return new ReadHuntDTO(hunt);
     }
+
+    public void deleteHunt(Long huntId) {
+        huntRepository.deleteById(huntId);
+    }
+
+    public ReadHuntDTO getHuntById(Long id) {
+        Optional<Hunt> huntOptional = huntRepository.findById(id);
+        if(huntOptional.isEmpty()) {
+            throw new EntityNotFoundException("Hunt not found");
+        }
+        return new ReadHuntDTO(huntOptional.get());
+    }
 }
