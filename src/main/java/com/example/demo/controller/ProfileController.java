@@ -57,5 +57,11 @@ public class ProfileController {
         return ResponseEntity.ok(userService.updateUser(authentication, userDTO));
     }
 
+    @DeleteMapping("/delete")
+    @Transactional
+    public ResponseEntity<ReadUserDTO> deleteProfile(Authentication authentication) {
+        return ResponseEntity.ok(userService.deleteUser(authentication));
+    }
+
 
 }

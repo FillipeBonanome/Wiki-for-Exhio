@@ -8,9 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -29,5 +30,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Page<ReadUserDTO>> readAllUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
         return ResponseEntity.ok(userService.getUsers(pageable));
+    }
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Transactional
+    public ResponseEntity<ReadUserDTO> banUser(@PathVariable(name = "id") UUID uuid) {
+        return ResponseEntity.ok(userService.banUser(uuid));
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -86,5 +87,36 @@ public class UserService {
                 savedUser.getName(),
                 savedUser.getActive()
         );
+    }
+
+    public ReadUserDTO deleteUser(Authentication authentication){
+        Optional<User> userOptional = (Optional<User>) authentication.getPrincipal();
+        if (userOptional.isEmpty()) {
+            throw new EntityNotFoundException("User not found");
+        }
+        User user = userOptional.get();
+        user.setActive(false);
+        User savedUser = userRepository.save(user);
+        return new ReadUserDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getActive()
+        );
+    }
+
+    public ReadUserDTO banUser(UUID uuid) {
+        Optional<User> userOptional = userRepository.findById(uuid);
+        if (userOptional.isEmpty()) {
+            throw new EntityNotFoundException("User not found");
+        }
+        User user = userOptional.get();
+        user.setActive(false);
+        User savedUser = userRepository.save(user);
+        return new ReadUserDTO(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getActive()
+        );
+
     }
 }

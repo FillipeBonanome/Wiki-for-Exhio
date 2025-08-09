@@ -1,4 +1,4 @@
-package com.example.demo.infra;
+package com.example.demo.infra.security;
 
 import com.example.demo.domain.User;
 import com.example.demo.repository.UserRepository;
@@ -36,9 +36,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (user.isEmpty()) {
                 throw new UsernameNotFoundException("User was not found");
             }
+            /*
             if(!user.get().getActive()) {
                 throw new EntityNotFoundException("User is deleted");
             }
+             */
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.get().getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
