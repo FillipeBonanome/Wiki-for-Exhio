@@ -4,6 +4,7 @@ import com.example.demo.domain.Hunt;
 import com.example.demo.domain.Monster;
 import com.example.demo.dto.hunt.CreateHuntDTO;
 import com.example.demo.dto.hunt.ReadHuntDTO;
+import com.example.demo.dto.hunt.UpdateHuntDTO;
 import com.example.demo.repository.HuntRepository;
 import com.example.demo.repository.MonsterRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -74,5 +75,17 @@ public class HuntService {
             throw new EntityNotFoundException("Hunt not found");
         }
         return new ReadHuntDTO(huntOptional.get());
+    }
+
+    public ReadHuntDTO updateHunt(Long huntId, UpdateHuntDTO huntDTO) {
+        Optional<Hunt> huntOptional = huntRepository.findById(huntId);
+        if (huntOptional.isEmpty()) {
+            throw new EntityNotFoundException("Hunt not found");
+        }
+
+        Hunt hunt = huntOptional.get();
+        hunt.updateHunt(huntDTO);
+        Hunt savedHunt = huntRepository.save(hunt);
+        return new ReadHuntDTO(savedHunt);
     }
 }

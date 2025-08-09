@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.dto.hunt.CreateHuntDTO;
+import com.example.demo.dto.hunt.UpdateHuntDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -50,5 +51,20 @@ public class Hunt {
 
     public void removeMonster(Monster monster) {
         monsters.remove(monster);
+    }
+
+    public void updateHunt(UpdateHuntDTO huntDTO) {
+        if (huntDTO.name() != null) {
+            this.name = huntDTO.name();
+        }
+        if(huntDTO.description() != null) {
+            this.description = huntDTO.description();
+        }
+        if(huntDTO.videoURL() != null) {
+            this.videoURL = huntDTO.videoURL();
+        }
+        if(huntDTO.recommendedLevel() != null) {
+            this.recommendedLevel = huntDTO.recommendedLevel();
+        }
     }
 }

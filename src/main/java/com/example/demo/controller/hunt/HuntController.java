@@ -2,6 +2,7 @@ package com.example.demo.controller.hunt;
 
 import com.example.demo.dto.hunt.CreateHuntDTO;
 import com.example.demo.dto.hunt.ReadHuntDTO;
+import com.example.demo.dto.hunt.UpdateHuntDTO;
 import com.example.demo.service.HuntService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,14 @@ public class HuntController {
         huntService.deleteHunt(huntId);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> updateHunt(@PathVariable(name = "id") Long huntId, @RequestBody UpdateHuntDTO huntDTO) {
+        return ResponseEntity.ok(huntService.updateHunt(huntId, huntDTO));
+    }
+
+
 
 }
