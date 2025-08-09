@@ -26,7 +26,7 @@ public class Hunt {
     private String name;
     @NotBlank
     private String description;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "hunt_monster",
             joinColumns = @JoinColumn(name = "hunt_id"),
