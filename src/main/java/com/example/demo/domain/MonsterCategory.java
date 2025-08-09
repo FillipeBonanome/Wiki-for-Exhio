@@ -10,6 +10,7 @@ public enum MonsterCategory {
     ELFOS,
     EXTRAPLANARES,
     FANTASMAGORICOS,
+    FEMINAZIS,
     GELADOS,
     GELECAS,
     GIGANTES,

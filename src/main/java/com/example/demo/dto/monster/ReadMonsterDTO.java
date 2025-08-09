@@ -2,6 +2,10 @@ package com.example.demo.dto.monster;
 
 import com.example.demo.domain.Monster;
 import com.example.demo.domain.MonsterCategory;
+import com.example.demo.dto.hunt.ReadHuntMonsterDTO;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 @Id
@@ -34,7 +38,8 @@ public record ReadMonsterDTO(
         Long experience,
         Long health,
         MonsterCategory category,
-        ResistsDTO resists
+        ResistsDTO resists,
+        Set<ReadHuntMonsterDTO> hunts
 ) {
     public ReadMonsterDTO(Monster savedMonster) {
         this(
@@ -44,7 +49,8 @@ public record ReadMonsterDTO(
                 savedMonster.getExperience(),
                 savedMonster.getHealth(),
                 savedMonster.getCategory(),
-                new ResistsDTO(savedMonster.getResists())
+                new ResistsDTO(savedMonster.getResists()),
+                savedMonster.getHunts().stream().map(ReadHuntMonsterDTO::new).collect(Collectors.toSet())
             );
     }
 }

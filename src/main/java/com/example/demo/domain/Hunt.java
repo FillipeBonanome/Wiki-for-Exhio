@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
+import com.example.demo.dto.hunt.CreateHuntDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -35,4 +37,14 @@ public class Hunt {
     private String videoURL;
     private Long recommendedLevel;
 
+    public Hunt(@Valid CreateHuntDTO createHuntDTO) {
+        this.name = createHuntDTO.name();
+        this.description = createHuntDTO.description();
+        this.videoURL = createHuntDTO.videoURL();
+        this.recommendedLevel = createHuntDTO.recommendedLevel();
+    }
+
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
+    }
 }

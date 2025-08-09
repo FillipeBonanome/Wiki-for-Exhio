@@ -1,12 +1,14 @@
 package com.example.demo.controller.hunt;
 
+import com.example.demo.dto.hunt.CreateHuntDTO;
 import com.example.demo.dto.hunt.ReadHuntDTO;
 import com.example.demo.service.HuntService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +22,20 @@ public class HuntController {
     @GetMapping
     public ResponseEntity<List<ReadHuntDTO>> getHunts() {
         return ResponseEntity.ok(huntService.findAll());
+    }
+
+    @PostMapping
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> addHunt(@RequestBody @Valid CreateHuntDTO createHuntDTO) {
+        return ResponseEntity.ok(huntService.registerHunt(createHuntDTO));
+    }
+
+    @PostMapping("{id}/add/{monster_id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> addMonsterToHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "monster_id") Long monsterId) {
+        return ResponseEntity.ok(huntService.addMonsterToHunt(huntId, monsterId));
     }
 
 }
