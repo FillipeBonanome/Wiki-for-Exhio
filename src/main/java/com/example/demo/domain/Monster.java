@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,6 +40,9 @@ public class Monster {
 
     @Embedded
     private Resists resists;
+
+    @ManyToMany
+    private Set<Hunt> hunts = new HashSet<>();
 
 
     public Monster(CreateMonsterDTO monsterDTO) {
