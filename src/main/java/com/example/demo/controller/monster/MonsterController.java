@@ -3,6 +3,7 @@ package com.example.demo.controller.monster;
 import com.example.demo.domain.MonsterCategory;
 import com.example.demo.dto.monster.CreateMonsterDTO;
 import com.example.demo.dto.monster.ReadMonsterDTO;
+import com.example.demo.dto.monster.UpdateMonsterDTO;
 import com.example.demo.service.MonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,4 +45,10 @@ public class MonsterController {
         return ResponseEntity.ok(monsterService.getMonstersByCategory(category));
     }
 
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadMonsterDTO> updateMonster(@PathVariable(name = "id") Long id, @RequestBody UpdateMonsterDTO monsterDTO) {
+        return ResponseEntity.ok(monsterService.updateMonster(id, monsterDTO));
+    }
 }
