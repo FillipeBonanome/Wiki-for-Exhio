@@ -31,6 +31,7 @@ public class Hunt {
             inverseJoinColumns = @JoinColumn(name = "monster_id")
     )
     private Set<Monster> monsters = new HashSet<>();
+    @Column(name = "video_url")
     private String videoURL;
     private Long recommendedLevel;
 
