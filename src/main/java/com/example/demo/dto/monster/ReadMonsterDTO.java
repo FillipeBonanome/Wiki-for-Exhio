@@ -39,6 +39,7 @@ public record ReadMonsterDTO(
         Long health,
         MonsterCategory category,
         ResistsDTO resists,
+        Long level,
         Set<ReadHuntMonsterDTO> hunts
 ) {
     public ReadMonsterDTO(Monster savedMonster) {
@@ -50,6 +51,7 @@ public record ReadMonsterDTO(
                 savedMonster.getHealth(),
                 savedMonster.getCategory(),
                 new ResistsDTO(savedMonster.getResists()),
+                savedMonster.getLevel(),
                 savedMonster.getHunts().stream().map(ReadHuntMonsterDTO::new).collect(Collectors.toSet())
             );
     }

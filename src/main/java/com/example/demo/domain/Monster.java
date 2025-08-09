@@ -44,6 +44,8 @@ public class Monster {
     @ManyToMany(mappedBy = "monsters")
     private Set<Hunt> hunts = new HashSet<>();
 
+    @NotNull
+    private Long level;
 
     public Monster(CreateMonsterDTO monsterDTO) {
         this.name = monsterDTO.name();
@@ -54,6 +56,6 @@ public class Monster {
         this.resists = new Resists(
                 monsterDTO.resists()
         );
-
+        this.level = monsterDTO.level();
     }
 }

@@ -15,6 +15,8 @@ public record CreateMonsterDTO(
         Long health,
         @NotBlank
         MonsterCategory category,
-        ResistsDTO resists
+        ResistsDTO resists,
+        @NotNull
+        Long level
 ) {
 }
