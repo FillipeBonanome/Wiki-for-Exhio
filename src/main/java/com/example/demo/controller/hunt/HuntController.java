@@ -38,4 +38,11 @@ public class HuntController {
         return ResponseEntity.ok(huntService.addMonsterToHunt(huntId, monsterId));
     }
 
+    @PostMapping("{id}/remove/{monster_id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> removeMonsterFromHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "monster_id") Long monsterId) {
+        return ResponseEntity.ok(huntService.removeMonsterFromHunt(huntId, monsterId));
+    }
+
 }

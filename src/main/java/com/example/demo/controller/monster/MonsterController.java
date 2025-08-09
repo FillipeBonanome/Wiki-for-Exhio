@@ -51,4 +51,6 @@ public class MonsterController {
     public ResponseEntity<ReadMonsterDTO> updateMonster(@PathVariable(name = "id") Long id, @RequestBody UpdateMonsterDTO monsterDTO) {
         return ResponseEntity.ok(monsterService.updateMonster(id, monsterDTO));
     }
+
+
 }

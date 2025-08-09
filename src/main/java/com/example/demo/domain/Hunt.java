@@ -47,4 +47,8 @@ public class Hunt {
     public void addMonster(Monster monster) {
         monsters.add(monster);
     }
+
+    public void removeMonster(Monster monster) {
+        monsters.remove(monster);
+    }
 }

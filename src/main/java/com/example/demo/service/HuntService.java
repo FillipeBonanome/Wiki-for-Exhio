@@ -49,4 +49,18 @@ public class HuntService {
         huntRepository.save(hunt);
         return new ReadHuntDTO(hunt);
     }
+
+    public ReadHuntDTO removeMonsterFromHunt(Long huntId, Long monsterId) {
+        if (!monsterRepository.existsById(monsterId)) {
+            throw new EntityNotFoundException("Monster not found");
+        }
+        if(!huntRepository.existsById(huntId)) {
+            throw new EntityNotFoundException("Hunt not found");
+        }
+        Hunt hunt = huntRepository.getReferenceById(huntId);
+        Monster monster = monsterRepository.getReferenceById(monsterId);
+        hunt.removeMonster(monster);
+        huntRepository.save(hunt);
+        return new ReadHuntDTO(hunt);
+    }
 }
