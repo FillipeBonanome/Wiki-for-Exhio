@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controller.user;
 
 import com.example.demo.domain.User;
-import com.example.demo.dto.FullUserDTO;
-import com.example.demo.dto.ReadUserDTO;
-import com.example.demo.dto.UpdateUserDTO;
+import com.example.demo.dto.user.FullUserDTO;
+import com.example.demo.dto.user.ReadUserDTO;
+import com.example.demo.dto.user.UpdateUserDTO;
 import com.example.demo.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

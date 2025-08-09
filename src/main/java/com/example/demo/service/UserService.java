@@ -2,10 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserRole;
-import com.example.demo.dto.CreateUserDTO;
-import com.example.demo.dto.ReadUserDTO;
-import com.example.demo.dto.UpdateUserDTO;
-import com.example.demo.dto.UserRoleDTO;
+import com.example.demo.dto.user.CreateUserDTO;
+import com.example.demo.dto.user.ReadUserDTO;
+import com.example.demo.dto.user.UpdateUserDTO;
+import com.example.demo.dto.user.UserRoleDTO;
 import com.example.demo.infra.exception.DuplicateResourceException;
 import com.example.demo.infra.utils.EnumUtils;
 import com.example.demo.repository.UserRepository;

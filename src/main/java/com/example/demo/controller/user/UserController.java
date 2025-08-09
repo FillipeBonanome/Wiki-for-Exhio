@@ -1,8 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.controller.user;
 
-import com.example.demo.domain.UserRole;
-import com.example.demo.dto.ReadUserDTO;
-import com.example.demo.dto.UserRoleDTO;
+import com.example.demo.dto.user.ReadUserDTO;
+import com.example.demo.dto.user.UserRoleDTO;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

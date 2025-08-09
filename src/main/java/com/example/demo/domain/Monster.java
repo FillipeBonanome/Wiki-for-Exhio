@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.dto.monster.CreateMonsterDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,4 +39,15 @@ public class Monster {
     private Resists resists;
 
 
+    public Monster(CreateMonsterDTO monsterDTO) {
+        this.name = monsterDTO.name();
+        this.description = monsterDTO.description();
+        this.experience = monsterDTO.experience();
+        this.health = monsterDTO.health();
+        this.category = monsterDTO.category();
+        this.resists = new Resists(
+                monsterDTO.resists()
+        );
+
+    }
 }

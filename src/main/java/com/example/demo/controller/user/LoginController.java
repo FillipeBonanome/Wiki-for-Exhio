@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.controller.user;
 
 import com.example.demo.domain.User;
-import com.example.demo.dto.LoginUserDTO;
+import com.example.demo.dto.user.LoginUserDTO;
 import com.example.demo.dto.TokenDTO;
 import com.example.demo.service.TokenService;
 import jakarta.persistence.EntityNotFoundException;

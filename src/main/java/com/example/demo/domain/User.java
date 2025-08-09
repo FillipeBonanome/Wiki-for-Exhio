@@ -1,7 +1,6 @@
 package com.example.demo.domain;
 
-import com.example.demo.dto.CreateUserDTO;
-import com.example.demo.dto.UpdateUserDTO;
+import com.example.demo.dto.user.CreateUserDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
