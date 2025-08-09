@@ -41,7 +41,7 @@ public class Monster {
     @Embedded
     private Resists resists;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "monsters")
     private Set<Hunt> hunts = new HashSet<>();
 
 
