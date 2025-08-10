@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.dto.quest.ReadRewardDTO;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,4 +18,7 @@ public class Reward {
     private String gold;
     private String stats;
 
+    public Reward(ReadRewardDTO reward) {
+        this(reward.item(), reward.gold(), reward.stats());
+    }
 }
