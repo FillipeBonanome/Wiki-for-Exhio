@@ -36,7 +36,6 @@ public class QuestService {
         if (huntOptional.isEmpty()) {
             throw new EntityNotFoundException("Hunt not found");
         }
-
         Hunt hunt = huntOptional.get();
         Quest quest = new Quest(questDTO, hunt);
         Quest savedQuest = questRepository.save(quest);
