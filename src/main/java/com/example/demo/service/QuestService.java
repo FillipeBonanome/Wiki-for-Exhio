@@ -9,6 +9,8 @@ import com.example.demo.repository.QuestRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -40,5 +42,13 @@ public class QuestService {
         Quest quest = new Quest(questDTO, hunt);
         Quest savedQuest = questRepository.save(quest);
         return new ReadQuestDTO(savedQuest);
+    }
+
+    public void deleteQuest(Long id) {
+        questRepository.deleteById(id);
+    }
+
+    public Page<ReadQuestDTO> getQuests(Pageable pageable) {
+        return questRepository.findAll(pageable).map(ReadQuestDTO::new);
     }
 }
