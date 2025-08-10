@@ -7,7 +7,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -37,6 +39,9 @@ public class Hunt {
     @Column(name = "video_url")
     private String videoURL;
     private Long recommendedLevel;
+
+    @OneToMany(mappedBy = "hunt", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Quest> quests = new ArrayList<>();
 
     public Hunt(@Valid CreateHuntDTO createHuntDTO) {
         this.name = createHuntDTO.name();
