@@ -77,8 +77,36 @@ public class HuntService {
         Hunt hunt = huntRepository.getReferenceById(huntId);
         Monster monster = monsterRepository.getReferenceById(monsterId);
         hunt.removeMonster(monster);
-        huntRepository.save(hunt);
-        return new ReadHuntDTO(hunt);
+        Hunt savedHunt = huntRepository.save(hunt);
+        return new ReadHuntDTO(savedHunt);
+    }
+
+    public ReadHuntDTO removeVocationFromHunt(Long huntId, Long vocationId) {
+        if(!vocationRepository.existsById(vocationId)) {
+            throw new EntityNotFoundException("Vocation not found");
+        }
+        if(!huntRepository.existsById(huntId)) {
+            throw new EntityNotFoundException("Hunt not found");
+        }
+        Hunt hunt = huntRepository.getReferenceById(huntId);
+        Vocation vocation = vocationRepository.getReferenceById(vocationId);
+        hunt.removeVocation(vocation);
+        Hunt savedHunt = huntRepository.save(hunt);
+        return new ReadHuntDTO(savedHunt);
+    }
+
+    public ReadHuntDTO addVocationToHunt(Long huntId, Long vocationId) {
+        if(!vocationRepository.existsById(vocationId)) {
+            throw new EntityNotFoundException("Vocation not found");
+        }
+        if(!huntRepository.existsById(huntId)) {
+            throw new EntityNotFoundException("Hunt not found");
+        }
+        Hunt hunt = huntRepository.getReferenceById(huntId);
+        Vocation vocation = vocationRepository.getReferenceById(vocationId);
+        hunt.addVocation(vocation);
+        Hunt savedHunt = huntRepository.save(hunt);
+        return new ReadHuntDTO(savedHunt);
     }
 
     public void deleteHunt(Long huntId) {
@@ -104,4 +132,6 @@ public class HuntService {
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
     }
+
+
 }

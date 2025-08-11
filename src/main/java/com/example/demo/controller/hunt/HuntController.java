@@ -37,18 +37,32 @@ public class HuntController {
         return ResponseEntity.ok(huntService.registerHunt(createHuntDTO));
     }
 
-    @PostMapping("{id}/add/{monster_id}")
+    @PostMapping("{id}/add_monster/{monster_id}")
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ReadHuntDTO> addMonsterToHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "monster_id") Long monsterId) {
         return ResponseEntity.ok(huntService.addMonsterToHunt(huntId, monsterId));
     }
 
-    @PostMapping("{id}/remove/{monster_id}")
+    @PostMapping("{id}/remove_monster/{monster_id}")
     @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ReadHuntDTO> removeMonsterFromHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "monster_id") Long monsterId) {
         return ResponseEntity.ok(huntService.removeMonsterFromHunt(huntId, monsterId));
+    }
+
+    @PostMapping("{id}/add_vocation/{vocation_id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> addVocationToHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "vocation_id") Long vocationId) {
+        return ResponseEntity.ok(huntService.addVocationToHunt(huntId, vocationId));
+    }
+
+    @PostMapping("{id}/remove_vocation/{vocation_id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadHuntDTO> removeVocationFromHunt(@PathVariable(name = "id") Long huntId, @PathVariable(name = "vocation_id") Long vocationId) {
+        return ResponseEntity.ok(huntService.removeVocationFromHunt(huntId, vocationId));
     }
 
     @DeleteMapping("{id}")
