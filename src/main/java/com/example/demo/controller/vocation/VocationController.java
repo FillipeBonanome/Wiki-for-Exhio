@@ -1,6 +1,7 @@
 package com.example.demo.controller.vocation;
 
 import com.example.demo.dto.vocation.CreateVocationDTO;
+import com.example.demo.dto.vocation.ListVocationsDTO;
 import com.example.demo.dto.vocation.ReadVocationDTO;
 import com.example.demo.dto.vocation.UpdateVocationDTO;
 import com.example.demo.service.VocationService;
@@ -21,7 +22,7 @@ public class VocationController {
     private VocationService vocationService;
 
     @GetMapping
-    public ResponseEntity<List<ReadVocationDTO>> getVocations() {
+    public ResponseEntity<List<ListVocationsDTO>> getVocations() {
         return ResponseEntity.ok(vocationService.getVocations());
     }
 

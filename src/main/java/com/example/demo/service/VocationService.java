@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Vocation;
 import com.example.demo.dto.vocation.CreateVocationDTO;
+import com.example.demo.dto.vocation.ListVocationsDTO;
 import com.example.demo.dto.vocation.ReadVocationDTO;
 import com.example.demo.dto.vocation.UpdateVocationDTO;
 import com.example.demo.repository.VocationRepository;
@@ -20,8 +21,8 @@ public class VocationService {
     @Autowired
     private VocationRepository vocationRepository;
 
-    public List<ReadVocationDTO> getVocations() {
-        return vocationRepository.findAll().stream().map(ReadVocationDTO::new).toList();
+    public List<ListVocationsDTO> getVocations() {
+        return vocationRepository.findAll().stream().map(ListVocationsDTO::new).toList();
     }
 
     public ReadVocationDTO registerVocation(@Valid CreateVocationDTO vocationDTO) {
