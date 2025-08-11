@@ -40,8 +40,18 @@ public class Hunt {
     private String videoURL;
     private Long recommendedLevel;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "hunt_vocation",
+            joinColumns = @JoinColumn(name = "hunt_id"),
+            inverseJoinColumns = @JoinColumn(name = "vocation_id")
+    )
+    private Set<Vocation> recommendedVocations = new HashSet<>();
+
     @OneToMany(mappedBy = "hunt", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Quest> quests = new ArrayList<>();
+
+
 
     public Hunt(@Valid CreateHuntDTO createHuntDTO) {
         this.name = createHuntDTO.name();
@@ -56,6 +66,14 @@ public class Hunt {
 
     public void removeMonster(Monster monster) {
         monsters.remove(monster);
+    }
+
+    public void addVocation(Vocation vocation) {
+        recommendedVocations.add(vocation);
+    }
+
+    public void removeVocation(Vocation vocation) {
+        recommendedVocations.remove(vocation);
     }
 
     public void updateHunt(UpdateHuntDTO huntDTO) {

@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,6 +32,9 @@ public class Vocation {
     @Valid
     @Embedded
     private VocationStats stats;
+
+    @ManyToMany(mappedBy = "recommendedVocations")
+    private Set<Hunt> recommendedHunts = new HashSet<>();
 
     //TODO --> Add spell list
 

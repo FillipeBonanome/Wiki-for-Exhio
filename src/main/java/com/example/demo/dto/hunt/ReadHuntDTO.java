@@ -3,6 +3,7 @@ package com.example.demo.dto.hunt;
 import com.example.demo.domain.Hunt;
 import com.example.demo.dto.monster.ReadMonsterDTO;
 import com.example.demo.dto.quest.ReadQuestDTO;
+import com.example.demo.dto.vocation.HuntVocationDTO;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,8 @@ public record ReadHuntDTO(
         Set<ReadMonsterDTO> monsters,
         String videoURL,
         Long recommendedLevel,
-        List<ReadQuestHuntDTO> quests
+        List<ReadQuestHuntDTO> quests,
+        Set<HuntVocationDTO> vocations
 ) {
     public ReadHuntDTO(Hunt hunt) {
         this(
@@ -25,7 +27,8 @@ public record ReadHuntDTO(
                 hunt.getMonsters().stream().map(ReadMonsterDTO::new).collect(Collectors.toSet()),
                 hunt.getVideoURL(),
                 hunt.getRecommendedLevel(),
-                hunt.getQuests().stream().map(ReadQuestHuntDTO::new).toList()
+                hunt.getQuests().stream().map(ReadQuestHuntDTO::new).toList(),
+                hunt.getRecommendedVocations().stream().map(HuntVocationDTO::new).collect(Collectors.toSet())
         );
     }
 }

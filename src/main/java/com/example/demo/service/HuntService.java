@@ -2,11 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Hunt;
 import com.example.demo.domain.Monster;
+import com.example.demo.domain.Vocation;
 import com.example.demo.dto.hunt.CreateHuntDTO;
 import com.example.demo.dto.hunt.ReadHuntDTO;
 import com.example.demo.dto.hunt.UpdateHuntDTO;
 import com.example.demo.repository.HuntRepository;
 import com.example.demo.repository.MonsterRepository;
+import com.example.demo.repository.VocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HuntService {
@@ -24,6 +27,9 @@ public class HuntService {
     @Autowired
     private MonsterRepository monsterRepository;
 
+    @Autowired
+    private VocationRepository vocationRepository;
+
     public List<ReadHuntDTO> findAll() {
         List<Hunt> hunts = huntRepository.findAll();
         return hunts.stream().map(ReadHuntDTO::new).toList();
@@ -31,6 +37,16 @@ public class HuntService {
 
     public ReadHuntDTO registerHunt(@Valid CreateHuntDTO createHuntDTO) {
         Hunt hunt = new Hunt(createHuntDTO);
+
+        //Adding each recommended vocation
+        Set<Long> vocationsId = createHuntDTO.recommendedVocations();
+        for(Long id : vocationsId){
+            if (vocationRepository.existsById(id)) {
+                Vocation vocation = vocationRepository.getReferenceById(id);
+                hunt.addVocation(vocation);
+            }
+        }
+
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
     }
