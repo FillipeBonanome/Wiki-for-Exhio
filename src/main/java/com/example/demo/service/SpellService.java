@@ -66,4 +66,8 @@ public class SpellService {
         Spell savedSpell = spellRepository.save(spell);
         return new ReadSpellDTO(savedSpell);
     }
+
+    public void deleteSpell(Long id) {
+        spellRepository.deleteById(id);
+    }
 }

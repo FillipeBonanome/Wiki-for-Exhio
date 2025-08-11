@@ -37,4 +37,12 @@ public class SpellController {
         return ResponseEntity.ok(spellService.updateSpell(id, spellDTO));
     }
 
+    @DeleteMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadSpellDTO> updateSpell(@PathVariable(name = "id") Long id) {
+        spellService.deleteSpell(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
