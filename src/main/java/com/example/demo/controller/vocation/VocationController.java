@@ -2,6 +2,7 @@ package com.example.demo.controller.vocation;
 
 import com.example.demo.dto.vocation.CreateVocationDTO;
 import com.example.demo.dto.vocation.ReadVocationDTO;
+import com.example.demo.dto.vocation.UpdateVocationDTO;
 import com.example.demo.service.VocationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ public class VocationController {
     public ResponseEntity<ReadVocationDTO> deleteVocationById(@PathVariable(name = "id") Long id) {
         vocationService.deleteVocationById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadVocationDTO> updateVocation(@PathVariable(name = "id") Long id, @RequestBody @Valid UpdateVocationDTO vocationDTO) {
+        return ResponseEntity.ok(vocationService.updateVocation(id, vocationDTO));
     }
 
 }

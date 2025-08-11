@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Vocation;
 import com.example.demo.dto.vocation.CreateVocationDTO;
 import com.example.demo.dto.vocation.ReadVocationDTO;
+import com.example.demo.dto.vocation.UpdateVocationDTO;
 import com.example.demo.repository.VocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -40,5 +41,16 @@ public class VocationService {
 
     public void deleteVocationById(Long id) {
         vocationRepository.deleteById(id);
+    }
+
+    public ReadVocationDTO updateVocation(Long id, @Valid UpdateVocationDTO vocationDTO) {
+        Optional<Vocation> vocationOptional = vocationRepository.findById(id);
+        if(vocationOptional.isEmpty()) {
+            throw new EntityNotFoundException("Vocation not found");
+        }
+        Vocation vocation = vocationOptional.get();
+        vocation.update(vocationDTO);
+        Vocation savedVocation = vocationRepository.save(vocation);
+        return new ReadVocationDTO(savedVocation);
     }
 }

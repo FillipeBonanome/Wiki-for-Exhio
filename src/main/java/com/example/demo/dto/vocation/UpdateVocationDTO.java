@@ -1,14 +1,9 @@
 package com.example.demo.dto.vocation;
 
-import jakarta.validation.constraints.NotBlank;
-
-public record CreateVocationDTO(
-        @NotBlank
+public record UpdateVocationDTO(
         String name,
-        @NotBlank
         String race,
         VocationStatsDTO stats,
-        @NotBlank
         String description
 ) {
 }

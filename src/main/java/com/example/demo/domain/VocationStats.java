@@ -43,6 +43,7 @@ public class VocationStats {
     @NotNull
     private Integer fishingSkill;
 
+    //TODO --> Check for every attribute if exists
     public VocationStats(VocationStatsDTO stats) {
         this.healthPerLevel = stats.healthPerLevel();
         this.manaPerLevel = stats.manaPerLevel();
