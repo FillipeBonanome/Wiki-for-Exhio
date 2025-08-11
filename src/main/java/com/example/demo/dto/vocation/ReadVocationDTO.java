@@ -22,6 +22,6 @@ public record ReadVocationDTO(
                 new VocationStatsDTO(vocation.getStats()),
                 vocation.getDescription(),
                 vocation.getRecommendedHunts().stream().map(VocationHuntDTO::new).collect(Collectors.toSet())
-                );
+        );
     }
 }
