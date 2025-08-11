@@ -36,4 +36,12 @@ public class VocationController {
         return ResponseEntity.ok(vocationService.getVocationById(id));
     }
 
+    @DeleteMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadVocationDTO> deleteVocationById(@PathVariable(name = "id") Long id) {
+        vocationService.deleteVocationById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

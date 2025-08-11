@@ -37,4 +37,8 @@ public class VocationService {
         Vocation vocation = vocationOptional.get();
         return new ReadVocationDTO(vocation);
     }
+
+    public void deleteVocationById(Long id) {
+        vocationRepository.deleteById(id);
+    }
 }
