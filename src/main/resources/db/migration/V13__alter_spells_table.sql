@@ -1,0 +1,1 @@
+ALTER TABLE spells modify column description TEXT;
