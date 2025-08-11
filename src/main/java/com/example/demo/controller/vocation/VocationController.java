@@ -31,4 +31,9 @@ public class VocationController {
         return ResponseEntity.ok(vocationService.registerVocation(vocationDTO));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<ReadVocationDTO> getVocationById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(vocationService.getVocationById(id));
+    }
+
 }
