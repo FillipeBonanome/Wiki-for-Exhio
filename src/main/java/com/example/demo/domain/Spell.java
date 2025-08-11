@@ -36,6 +36,7 @@ public class Spell {
     private String cooldownGroup;
     @NotNull
     private Long spellRange;
+    private String videoURL;
 
     //TODO --> List vocations
 

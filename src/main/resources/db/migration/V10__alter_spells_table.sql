@@ -1,0 +1,1 @@
+alter table spells add column video_url varchar(255);
