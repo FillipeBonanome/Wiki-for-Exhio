@@ -37,6 +37,8 @@ public class Vocation {
     private Set<Hunt> recommendedHunts = new HashSet<>();
 
     //TODO --> Add spell list
+    @ManyToMany(mappedBy = "vocations")
+    private Set<Spell> spellList = new HashSet<>();
 
     @NotBlank
     private String description;

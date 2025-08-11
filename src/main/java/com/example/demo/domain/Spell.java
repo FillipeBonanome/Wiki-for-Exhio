@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -38,6 +41,12 @@ public class Spell {
     private Long spellRange;
     private String videoURL;
 
-    //TODO --> List vocations
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "spell_vocation",
+            joinColumns = @JoinColumn(name = "spell_id"),
+            inverseJoinColumns = @JoinColumn(name = "vocation_id")
+    )
+    private Set<Vocation> vocations = new HashSet<>();
 
 }
