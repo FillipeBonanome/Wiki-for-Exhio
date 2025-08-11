@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.dto.spell.CreateSpellDTO;
+import com.example.demo.dto.spell.UpdateSpellDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -44,7 +45,7 @@ public class Spell {
     @Column(name = "video_url")
     private String videoURL;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "spell_vocation",
             joinColumns = @JoinColumn(name = "spell_id"),
@@ -63,6 +64,39 @@ public class Spell {
         this.cooldownGroup = spellDTO.cooldownGroup();
         this.spellRange = spellDTO.spellRange();
         this.videoURL = spellDTO.videoURL();
+    }
+
+    public void update(UpdateSpellDTO spellDTO) {
+        if(spellDTO.name() != null) {
+            this.name = spellDTO.name();
+        }
+        if(spellDTO.description() != null) {
+            this.description = spellDTO.description();
+        }
+        if(spellDTO.level() != null) {
+            this.level = spellDTO.level();
+        }
+        if(spellDTO.manaCost() != null) {
+            this.manaCost = spellDTO.manaCost();
+        }
+        if(spellDTO.soulCost() != null) {
+            this.soulCost = spellDTO.soulCost();
+        }
+        if(spellDTO.element() != null) {
+            this.element = spellDTO.element();
+        }
+        if(spellDTO.cooldown() != null) {
+            this.cooldown = spellDTO.cooldown();
+        }
+        if(spellDTO.cooldownGroup() != null) {
+            this.cooldownGroup = spellDTO.cooldownGroup();
+        }
+        if(spellDTO.spellRange() != null) {
+            this.spellRange = spellDTO.spellRange();
+        }
+        if(spellDTO.videoURL() != null) {
+            this.videoURL = spellDTO.videoURL();
+        }
     }
 
     public void addVocation(Vocation vocation) {

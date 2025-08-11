@@ -64,4 +64,8 @@ public class Vocation {
             this.description = vocationDTO.description();
         }
     }
+
+    public void clearSpells() {
+        spellList.clear();
+    }
 }

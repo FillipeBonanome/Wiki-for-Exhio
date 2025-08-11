@@ -2,6 +2,7 @@ package com.example.demo.controller.spell;
 
 import com.example.demo.dto.spell.CreateSpellDTO;
 import com.example.demo.dto.spell.ReadSpellDTO;
+import com.example.demo.dto.spell.UpdateSpellDTO;
 import com.example.demo.service.SpellService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class SpellController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ReadSpellDTO> registerSpell(@RequestBody @Valid CreateSpellDTO spellDTO) {
         return ResponseEntity.ok(spellService.registerSpell(spellDTO));
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadSpellDTO> updateSpell(@PathVariable(name = "id") Long id, @RequestBody UpdateSpellDTO spellDTO) {
+        return ResponseEntity.ok(spellService.updateSpell(id, spellDTO));
     }
 
 }
