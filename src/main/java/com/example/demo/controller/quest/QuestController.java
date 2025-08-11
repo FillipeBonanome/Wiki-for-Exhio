@@ -2,6 +2,7 @@ package com.example.demo.controller.quest;
 
 import com.example.demo.dto.quest.CreateQuestDTO;
 import com.example.demo.dto.quest.ReadQuestDTO;
+import com.example.demo.dto.quest.UpdateQuestDTO;
 import com.example.demo.service.QuestService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,13 @@ public class QuestController {
     public ResponseEntity<ReadQuestDTO> deleteQuest(@PathVariable(name = "id") Long id) {
         questService.deleteQuest(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadQuestDTO> updateQuest(@PathVariable(name = "id") Long id, @RequestBody @Valid UpdateQuestDTO questDTO) {
+        return ResponseEntity.ok(questService.updateQuest(id, questDTO));
     }
 
 }

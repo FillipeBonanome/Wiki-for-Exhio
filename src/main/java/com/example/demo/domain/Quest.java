@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.dto.quest.CreateQuestDTO;
+import com.example.demo.dto.quest.UpdateQuestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -38,5 +39,14 @@ public class Quest {
         this.hunt = hunt;
         this.reward = new Reward(questDTO.reward());
         this.level = questDTO.level();;
+    }
+
+    public void update(@Valid UpdateQuestDTO questDTO) {
+        if(questDTO.name() != null) {
+            this.name = questDTO.name();
+        }
+        if(questDTO.level() != null) {
+            this.level = questDTO.level();
+        }
     }
 }

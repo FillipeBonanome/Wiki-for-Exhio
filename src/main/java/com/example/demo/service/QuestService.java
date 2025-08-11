@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Hunt;
 import com.example.demo.domain.Quest;
+import com.example.demo.domain.Reward;
 import com.example.demo.dto.quest.CreateQuestDTO;
 import com.example.demo.dto.quest.ReadQuestDTO;
+import com.example.demo.dto.quest.UpdateQuestDTO;
 import com.example.demo.repository.HuntRepository;
 import com.example.demo.repository.QuestRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,5 +52,31 @@ public class QuestService {
 
     public Page<ReadQuestDTO> getQuests(Pageable pageable) {
         return questRepository.findAll(pageable).map(ReadQuestDTO::new);
+    }
+
+    public ReadQuestDTO updateQuest(Long id, UpdateQuestDTO questDTO) {
+        Optional<Quest> questOptional = questRepository.findById(id);
+        if(questOptional.isEmpty()) {
+            throw new EntityNotFoundException("Quest not found");
+        }
+
+        Quest quest = questOptional.get();
+        quest.update(questDTO);
+
+        if(questDTO.huntId() != null) {
+            Optional<Hunt> huntOptional = huntRepository.findById(questDTO.huntId());
+            if(huntOptional.isEmpty()) {
+                throw new EntityNotFoundException("Hunt not found");
+            }
+            quest.setHunt(huntOptional.get());
+        }
+
+        if(questDTO.reward() != null) {
+            Reward reward = new Reward(questDTO.reward());
+            quest.setReward(reward);
+        }
+
+        Quest savedQuest = questRepository.save(quest);
+        return new ReadQuestDTO(savedQuest);
     }
 }
