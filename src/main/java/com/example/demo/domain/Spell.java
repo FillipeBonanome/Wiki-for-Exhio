@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
+import com.example.demo.dto.spell.CreateSpellDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -39,6 +41,7 @@ public class Spell {
     private String cooldownGroup;
     @NotNull
     private Long spellRange;
+    @Column(name = "video_url")
     private String videoURL;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -49,4 +52,24 @@ public class Spell {
     )
     private Set<Vocation> vocations = new HashSet<>();
 
+    public Spell(@Valid CreateSpellDTO spellDTO) {
+        this.name = spellDTO.name();
+        this.description = spellDTO.description();
+        this.level = spellDTO.level();
+        this.manaCost = spellDTO.manaCost();
+        this.soulCost = spellDTO.soulCost();
+        this.element = spellDTO.element();
+        this.cooldown = spellDTO.cooldown();
+        this.cooldownGroup = spellDTO.cooldownGroup();
+        this.spellRange = spellDTO.spellRange();
+        this.videoURL = spellDTO.videoURL();
+    }
+
+    public void addVocation(Vocation vocation) {
+        vocations.add(vocation);
+    }
+
+    public void removeVocation(Vocation vocation) {
+        vocations.remove(vocation);
+    }
 }
