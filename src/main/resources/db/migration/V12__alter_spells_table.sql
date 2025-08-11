@@ -1,0 +1,1 @@
+alter table spells add column level bigint;
