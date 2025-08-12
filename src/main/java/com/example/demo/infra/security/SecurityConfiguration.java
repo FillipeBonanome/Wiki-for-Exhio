@@ -28,13 +28,15 @@ public class SecurityConfiguration {
         return httpSecurity.csrf(csrf -> csrf.disable()).
                 sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
                 authorizeHttpRequests((auth) ->
-                                auth
-                                    .requestMatchers(HttpMethod.GET, "/monsters/**").permitAll()
-                                    .requestMatchers(HttpMethod.GET, "/hunts/**").permitAll()
-                                    .requestMatchers(HttpMethod.GET, "/quests/**").permitAll()
-                                    .requestMatchers(HttpMethod.GET, "/spells/**").permitAll()
-                                    .requestMatchers(HttpMethod.GET, "/vocations/**").permitAll()
-                                    .anyRequest().authenticated())
+                    auth
+                        .requestMatchers(HttpMethod.GET, "/monsters/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/hunts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/quests/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/spells/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/vocations/**").permitAll()
+                        .requestMatchers("/sign-up/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
