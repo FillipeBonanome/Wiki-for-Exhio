@@ -2,6 +2,7 @@ package com.example.demo.infra.security;
 
 import com.example.demo.domain.User;
 import com.example.demo.dto.ErrorDTO;
+import com.example.demo.dto.SecurityErrorDTO;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -48,11 +50,9 @@ public class SecurityFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            ErrorDTO errorDTO = new ErrorDTO(
+            SecurityErrorDTO errorDTO = new SecurityErrorDTO(
                     HttpStatus.BAD_REQUEST.value(),
-                    e.getMessage(),
-                    request.getRequestURI(),
-                    LocalDateTime.now()
+                    e.getMessage()
             );
 
             response.setStatus(HttpStatus.BAD_REQUEST.value());
