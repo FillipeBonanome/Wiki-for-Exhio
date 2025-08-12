@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import com.example.demo.dto.monster.CreateMonsterDTO;
 import com.example.demo.dto.monster.UpdateMonsterDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -48,7 +49,7 @@ public class Monster {
     @NotNull
     private Long level;
 
-    public Monster(CreateMonsterDTO monsterDTO) {
+    public Monster(@Valid CreateMonsterDTO monsterDTO) {
         this.name = monsterDTO.name();
         this.description = monsterDTO.description();
         this.experience = monsterDTO.experience();

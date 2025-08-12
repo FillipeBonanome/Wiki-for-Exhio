@@ -43,20 +43,19 @@ public class VocationStats {
     @NotNull
     private Integer fishingSkill;
 
-    //TODO --> Check for every attribute if exists
     public VocationStats(VocationStatsDTO stats) {
-        this.healthPerLevel = stats.healthPerLevel();
-        this.manaPerLevel = stats.manaPerLevel();
-        this.capPerLevel = stats.capPerLevel();
-        this.healthRegen = stats.healthRegen();
-        this.manaRegen = stats.manaRegen();
-        this.magicLevel = stats.magicLevel();
-        this.fistSkill = stats.fistSkill();
-        this.clubSkill = stats.clubSkill();
-        this.swordSkill = stats.swordSkill();
-        this.axeSkill = stats.axeSkill();
-        this.distanceSkill = stats.distanceSkill();
-        this.shieldSkill = stats.shieldSkill();
-        this.fishingSkill = stats.fishingSkill();
+        this.healthPerLevel = stats.healthPerLevel() == null ? 0 : stats.healthPerLevel();
+        this.manaPerLevel = stats.manaPerLevel() == null ? 0 : stats.manaPerLevel();
+        this.capPerLevel = stats.capPerLevel() == null ? 0 : stats.capPerLevel();
+        this.healthRegen = stats.healthRegen() == null ? 0 : stats.healthRegen();
+        this.manaRegen = stats.manaRegen() == null ? 0 : stats.manaRegen();
+        this.magicLevel = stats.magicLevel() == null ? 0 : stats.magicLevel();
+        this.fistSkill = stats.fistSkill() == null ? 0 : stats.fistSkill();
+        this.clubSkill = stats.clubSkill() == null ? 0 : stats.clubSkill();
+        this.swordSkill = stats.swordSkill() == null ? 0 : stats.swordSkill();
+        this.axeSkill = stats.axeSkill() == null ? 0 : stats.axeSkill();
+        this.distanceSkill = stats.distanceSkill() == null ? 0 : stats.distanceSkill();
+        this.shieldSkill = stats.shieldSkill() == null ? 0 : stats.shieldSkill();
+        this.fishingSkill = stats.fishingSkill() == null ? 0 : stats.fishingSkill();
     }
 }

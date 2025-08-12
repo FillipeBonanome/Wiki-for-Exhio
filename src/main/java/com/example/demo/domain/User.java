@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import com.example.demo.dto.user.CreateUserDTO;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -46,7 +47,7 @@ public class User implements UserDetails {
 
     private Boolean active;
 
-    public User(CreateUserDTO user) {
+    public User(@Valid CreateUserDTO user) {
         this.name = user.name();
         this.login = user.login();
         this.password = user.password();
