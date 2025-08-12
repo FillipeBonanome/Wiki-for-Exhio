@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 @Service
 public class SpellService {
@@ -25,12 +24,7 @@ public class SpellService {
     private VocationRepository vocationRepository;
 
     public ReadSpellDTO getSpellById(Long id) {
-        Optional<Spell> spellOptional = spellRepository.findById(id);
-        if(spellOptional.isEmpty()) {
-            throw new EntityNotFoundException("Spell not found");
-        }
-
-        Spell spell = spellOptional.get();
+        Spell spell = spellRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Spell not found"));
         return new ReadSpellDTO(spell);
     }
 
@@ -47,11 +41,7 @@ public class SpellService {
     }
 
     public ReadSpellDTO updateSpell(Long id, UpdateSpellDTO spellDTO) {
-        Optional<Spell> spellOptional = spellRepository.findById(id);
-        if(spellOptional.isEmpty()) {
-            throw new EntityNotFoundException("Spell not found");
-        }
-        Spell spell = spellOptional.get();
+        Spell spell = spellRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Spell not found"));
         spell.update(spellDTO);
         if(spellDTO.vocationsId() != null) {
             spell.setVocations(new HashSet<>());

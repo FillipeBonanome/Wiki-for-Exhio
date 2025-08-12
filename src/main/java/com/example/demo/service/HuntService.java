@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -52,58 +51,32 @@ public class HuntService {
     }
 
     public ReadHuntDTO addMonsterToHunt(Long huntId, Long monsterId) {
-        if (!monsterRepository.existsById(monsterId)) {
-            throw new EntityNotFoundException("Monster not found");
-        }
-        if(!huntRepository.existsById(huntId)) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-
-        Hunt hunt = huntRepository.getReferenceById(huntId);
-        Monster monster = monsterRepository.getReferenceById(monsterId);
-
+        Hunt hunt = huntRepository.findById(huntId).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+        Monster monster = monsterRepository.findById(monsterId).orElseThrow(() -> new EntityNotFoundException("Monster not found"));
         hunt.addMonster(monster);
         huntRepository.save(hunt);
         return new ReadHuntDTO(hunt);
     }
 
     public ReadHuntDTO removeMonsterFromHunt(Long huntId, Long monsterId) {
-        if (!monsterRepository.existsById(monsterId)) {
-            throw new EntityNotFoundException("Monster not found");
-        }
-        if(!huntRepository.existsById(huntId)) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-        Hunt hunt = huntRepository.getReferenceById(huntId);
-        Monster monster = monsterRepository.getReferenceById(monsterId);
+        Hunt hunt = huntRepository.findById(huntId).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+        Monster monster = monsterRepository.findById(monsterId).orElseThrow(() -> new EntityNotFoundException("Monster not found"));
         hunt.removeMonster(monster);
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
     }
 
     public ReadHuntDTO removeVocationFromHunt(Long huntId, Long vocationId) {
-        if(!vocationRepository.existsById(vocationId)) {
-            throw new EntityNotFoundException("Vocation not found");
-        }
-        if(!huntRepository.existsById(huntId)) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-        Hunt hunt = huntRepository.getReferenceById(huntId);
-        Vocation vocation = vocationRepository.getReferenceById(vocationId);
+        Vocation vocation = vocationRepository.findById(vocationId).orElseThrow(() -> new EntityNotFoundException("Vocation not found"));
+        Hunt hunt = huntRepository.findById(huntId).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
         hunt.removeVocation(vocation);
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
     }
 
     public ReadHuntDTO addVocationToHunt(Long huntId, Long vocationId) {
-        if(!vocationRepository.existsById(vocationId)) {
-            throw new EntityNotFoundException("Vocation not found");
-        }
-        if(!huntRepository.existsById(huntId)) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-        Hunt hunt = huntRepository.getReferenceById(huntId);
-        Vocation vocation = vocationRepository.getReferenceById(vocationId);
+        Vocation vocation = vocationRepository.findById(vocationId).orElseThrow(() -> new EntityNotFoundException("Vocation not found"));
+        Hunt hunt = huntRepository.findById(huntId).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
         hunt.addVocation(vocation);
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
@@ -114,20 +87,12 @@ public class HuntService {
     }
 
     public ReadHuntDTO getHuntById(Long id) {
-        Optional<Hunt> huntOptional = huntRepository.findById(id);
-        if(huntOptional.isEmpty()) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-        return new ReadHuntDTO(huntOptional.get());
+        Hunt hunt = huntRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+        return new ReadHuntDTO(hunt);
     }
 
     public ReadHuntDTO updateHunt(Long huntId, UpdateHuntDTO huntDTO) {
-        Optional<Hunt> huntOptional = huntRepository.findById(huntId);
-        if (huntOptional.isEmpty()) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-
-        Hunt hunt = huntOptional.get();
+        Hunt hunt = huntRepository.findById(huntId).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
         hunt.updateHunt(huntDTO);
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MonsterService {
@@ -30,11 +29,8 @@ public class MonsterService {
     }
 
     public ReadMonsterDTO getMonsterById(Long id) {
-        Optional<Monster> monsterOptional = monsterRepository.findById(id);
-        if (monsterOptional.isEmpty()) {
-            throw new EntityNotFoundException("Monster not found");
-        }
-        return new ReadMonsterDTO(monsterOptional.get());
+        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Monster not found"));
+        return new ReadMonsterDTO(monster);
     }
 
     public List<ReadMonsterDTO> getMonstersByCategory(MonsterCategory category) {
@@ -43,11 +39,7 @@ public class MonsterService {
     }
 
     public ReadMonsterDTO updateMonster(Long id, UpdateMonsterDTO monsterDTO) {
-        Optional<Monster> monsterOptional = monsterRepository.findById(id);
-        if (monsterOptional.isEmpty()) {
-            throw new EntityNotFoundException("Monster not found");
-        }
-        Monster monster = monsterOptional.get();
+        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Monster not found"));
         monster.updateMonster(monsterDTO);
         Monster savedMonster = monsterRepository.save(monster);
         return new ReadMonsterDTO(savedMonster);

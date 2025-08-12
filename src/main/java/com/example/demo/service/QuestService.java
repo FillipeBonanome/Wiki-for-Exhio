@@ -15,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class QuestService {
 
@@ -27,20 +25,12 @@ public class QuestService {
     private HuntRepository huntRepository;
 
     public ReadQuestDTO getQuestById(Long id) {
-        Optional<Quest> questOptional = questRepository.findById(id);
-        if(questOptional.isEmpty()) {
-            throw new EntityNotFoundException("Quest not found");
-        }
-        Quest quest = questOptional.get();
+        Quest quest = questRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Quest not found"));
         return new ReadQuestDTO(quest);
     }
 
     public ReadQuestDTO registerQuest(@Valid CreateQuestDTO questDTO) {
-        Optional<Hunt> huntOptional = huntRepository.findById(questDTO.huntId());
-        if (huntOptional.isEmpty()) {
-            throw new EntityNotFoundException("Hunt not found");
-        }
-        Hunt hunt = huntOptional.get();
+        Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
         Quest quest = new Quest(questDTO, hunt);
         Quest savedQuest = questRepository.save(quest);
         return new ReadQuestDTO(savedQuest);
@@ -55,20 +45,12 @@ public class QuestService {
     }
 
     public ReadQuestDTO updateQuest(Long id, UpdateQuestDTO questDTO) {
-        Optional<Quest> questOptional = questRepository.findById(id);
-        if(questOptional.isEmpty()) {
-            throw new EntityNotFoundException("Quest not found");
-        }
-
-        Quest quest = questOptional.get();
+        Quest quest = questRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Quest not found"));
         quest.update(questDTO);
 
         if(questDTO.huntId() != null) {
-            Optional<Hunt> huntOptional = huntRepository.findById(questDTO.huntId());
-            if(huntOptional.isEmpty()) {
-                throw new EntityNotFoundException("Hunt not found");
-            }
-            quest.setHunt(huntOptional.get());
+            Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+            quest.setHunt(hunt);
         }
 
         if(questDTO.reward() != null) {
