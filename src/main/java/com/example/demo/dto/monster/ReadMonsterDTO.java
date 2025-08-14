@@ -2,6 +2,7 @@ package com.example.demo.dto.monster;
 
 import com.example.demo.domain.Monster;
 import com.example.demo.domain.MonsterCategory;
+import com.example.demo.dto.dungeon.SimpleDungeonDTO;
 import com.example.demo.dto.hunt.ReadHuntMonsterDTO;
 
 import java.util.Set;
@@ -40,8 +41,9 @@ public record ReadMonsterDTO(
         MonsterCategory category,
         ResistsDTO resists,
         Long level,
-        Set<ReadHuntMonsterDTO> hunts
-) {
+        Set<ReadHuntMonsterDTO> hunts,
+        Set<SimpleDungeonDTO> dungeons
+ ) {
     public ReadMonsterDTO(Monster savedMonster) {
         this(
                 savedMonster.getId(),
@@ -52,7 +54,8 @@ public record ReadMonsterDTO(
                 savedMonster.getCategory(),
                 new ResistsDTO(savedMonster.getResists()),
                 savedMonster.getLevel(),
-                savedMonster.getHunts().stream().map(ReadHuntMonsterDTO::new).collect(Collectors.toSet())
+                savedMonster.getHunts().stream().map(ReadHuntMonsterDTO::new).collect(Collectors.toSet()),
+                savedMonster.getDungeons().stream().map(SimpleDungeonDTO::new).collect(Collectors.toSet())
             );
     }
 }
