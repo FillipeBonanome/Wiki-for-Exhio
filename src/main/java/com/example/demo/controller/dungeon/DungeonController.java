@@ -2,6 +2,7 @@ package com.example.demo.controller.dungeon;
 
 import com.example.demo.dto.dungeon.CreateDungeonDTO;
 import com.example.demo.dto.dungeon.ReadDungeonDTO;
+import com.example.demo.dto.dungeon.UpdateDungeonDTO;
 import com.example.demo.service.DungeonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class DungeonController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ReadDungeonDTO> registerDungeon(@RequestBody @Valid CreateDungeonDTO dungeonDTO) {
         return ResponseEntity.ok(dungeonService.registerDungeon(dungeonDTO));
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadDungeonDTO> updateDungeon(@PathVariable(name = "id") Long id, @RequestBody UpdateDungeonDTO dungeonDTO) {
+        return ResponseEntity.ok(dungeonService.updateDungeon(id, dungeonDTO));
     }
 
 }

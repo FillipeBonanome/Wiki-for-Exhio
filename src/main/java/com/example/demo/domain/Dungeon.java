@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.dto.dungeon.CreateDungeonDTO;
+import com.example.demo.dto.dungeon.UpdateDungeonDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -50,5 +51,17 @@ public class Dungeon {
 
     public void addMonster(Monster monster) {
         monsters.add(monster);
+    }
+
+    public void update(UpdateDungeonDTO dungeonDTO) {
+        if(dungeonDTO.name() != null) {
+            this.name = dungeonDTO.name();
+        }
+        if(dungeonDTO.dungeonSize() != null) {
+            this.dungeonSize = dungeonDTO.dungeonSize();
+        }
+        if(dungeonDTO.monstersToKill() != null) {
+            this.monstersToKill = dungeonDTO.monstersToKill();
+        }
     }
 }
