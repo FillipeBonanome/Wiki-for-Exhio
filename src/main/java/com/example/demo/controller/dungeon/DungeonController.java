@@ -37,4 +37,12 @@ public class DungeonController {
         return ResponseEntity.ok(dungeonService.updateDungeon(id, dungeonDTO));
     }
 
+    @DeleteMapping("{id}")
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ReadDungeonDTO> deleteDDungeon(@PathVariable(name = "id") Long id) {
+        dungeonService.deleteDungeon(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -62,4 +62,8 @@ public class DungeonService {
         Dungeon savedDungeon = dungeonRepository.save(dungeon);
         return new ReadDungeonDTO(savedDungeon);
     }
+
+    public void deleteDungeon(Long id) {
+        dungeonRepository.deleteById(id);
+    }
 }
