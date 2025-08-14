@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/vocations/**").permitAll()
                         .requestMatchers("/sign-up/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/dungeons/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -46,6 +46,9 @@ public class Monster {
     @ManyToMany(mappedBy = "monsters")
     private Set<Hunt> hunts = new HashSet<>();
 
+    @ManyToMany(mappedBy = "monsters")
+    private Set<Dungeon> dungeons = new HashSet<>();
+
     @NotNull
     private Long level;
 
